@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { useContext } from 'react'
 import { StoreContextRecipe } from '../../App'
-import axios from 'axios'
+
 
 const schema = yup.object().shape({
     recipe: yup.string().required("Required")
@@ -17,21 +17,12 @@ const Header = () => {
         resolver: yupResolver(schema),
     });
 
-    const fetchData = async (query) => {
-        const result = await axios(`http://forkify-api.herokuapp.com/api/search?q=${query}`)
-        dispachRecipe({
-            type: "changePrimitiveType",
-            propertyId: "recipes",
-            value: result.data.recipes
-        })
-    }
 
     const onSubmit = (data) => {
-        fetchData(data.recipe)
         dispachRecipe({
             type: "changePrimitiveType",
             propertyId: "query",
-            value: ''
+            value: data?.recipe
         })
     };
 
@@ -48,12 +39,12 @@ const Header = () => {
                 onChange: (e) => {
                     dispachRecipe({
                         type: "changePrimitiveType",
-                        propertyId: "query",
+                        propertyId: "inputQuery",
                         value: e.target.value
                     })
                 }
               })}
-              value={stateRecipe?.query || ''}
+              value={stateRecipe?.inputQuery || ''}
               name='recipe'
               type="text" 
               className="search__field" 

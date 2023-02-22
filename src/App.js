@@ -1,5 +1,4 @@
 import { createContext, useEffect, useReducer } from "react";
-import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import LeftMenu from "./components/LeftMenu";
 import Recipe from "./components/Recipe";
@@ -18,17 +17,13 @@ function App() {
   }, [stateRecipe.recipes.length])
 
   return (
-     <Routes>
-      <Route path="/" element={
       <StoreContextRecipe.Provider value= { { stateRecipe, dispachRecipe } }>
         <div className="container">
            <Header/>
            <LeftMenu/>
+           <Recipe/> 
         </div>
       </StoreContextRecipe.Provider>
-      }/>
-      <Route path="/recipe/:id" element={<Recipe/>}/>
-     </Routes>
   );
 }
 
