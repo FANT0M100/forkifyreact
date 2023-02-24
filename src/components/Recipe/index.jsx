@@ -26,6 +26,28 @@ const Recipe = () => {
         stateRecipe?.recipeId && refetch()
     }, [stateRecipe.recipeId]) 
 
+    const likesToggleHandler = () => {
+        const index = stateRecipe?.likes.findIndex(el => el?.id === data?.recipe_id)
+        if(index === -1) {
+            //add
+            dispachRecipe({
+                type: "addLikes",
+                value: {
+                    id: data?.recipe_id,
+                    title: data?.title,
+                    publisher: data?.publisher,
+                    img: data?.image_url
+                }
+            })
+        }else {
+            //delete
+            dispachRecipe({
+                type: 'deleteLikes',
+                value: data?.recipe_id
+            })
+        }
+    }
+
     if(isLoading){
         return(
             <div className='loader'>
@@ -92,9 +114,9 @@ const Recipe = () => {
                     </div>
 
                 </div>
-                <button className="recipe__love">
+                <button className="recipe__love" onClick={() => likesToggleHandler()}>
                     <svg className="header__likes">
-                        <use href="img/icons.svg#icon-heart-outlined"></use>
+                        <use href={`img/icons.svg#icon-heart${stateRecipe.likes.findIndex(el => el.id === data?.recipe_id) !== -1 ? "" : "-outlined"}`}></use> 
                     </svg>
                 </button>
             </div>

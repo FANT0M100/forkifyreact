@@ -9,5 +9,6 @@ export const recipeState = {
     ingredients: [],
     publisher: '',
     link: '',
-    recipeId: ''
+    recipeId: '',
+    likes: []
 }

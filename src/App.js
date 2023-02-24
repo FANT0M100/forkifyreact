@@ -13,8 +13,11 @@ function App() {
   const [stateRecipe, dispachRecipe] = useReducer(recipeReducer, recipeState)
 
   useEffect(() => {
-    console.log(stateRecipe);
-  }, [stateRecipe.recipes.length])
+    dispachRecipe({
+      type: 'initLikes',
+      value: JSON.parse(window.localStorage.getItem('likes')) || []
+    })
+  }, [])
 
   return (
       <StoreContextRecipe.Provider value= { { stateRecipe, dispachRecipe } }>
